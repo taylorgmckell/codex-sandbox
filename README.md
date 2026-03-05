@@ -1,13 +1,18 @@
 # codex-sandbox
 Used for random projects using codex assist tool
 
-## Snake game
+## Repository layout
+Each game has its own dedicated top-level folder.
+
+- `snake/`
+
+## Snake
 A minimal classic Snake implementation (grid movement, growth, food spawn, score, game-over, pause, restart).
 
 ### Run
 1. From `C:\GitHub\codex-sandbox`, start a static server (example):
    `python -m http.server 8000`
-2. Open `http://localhost:8000` in a browser.
+2. Open `http://localhost:8000/snake/` in a browser.
 
 ### Controls
 - Keyboard: Arrow keys or `W/A/S/D`
@@ -26,4 +31,4 @@ A minimal classic Snake implementation (grid movement, growth, food spawn, score
 
 ### Tests
 No test runner/tooling exists in this repo currently, so automated tests were not added.
-Core game logic is isolated in `src/snake-logic.js` for easy future unit testing.
+Core game logic is isolated in `snake/src/snake-logic.js` for easy future unit testing.
