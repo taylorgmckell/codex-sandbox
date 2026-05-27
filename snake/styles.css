@@ -1,0 +1,84 @@
+:root {
+  --bg: #f6f6f3;
+  --text: #1e1f1b;
+  --muted: #5c6154;
+  --panel: #ffffff;
+  --line: #d3d8cb;
+  --snake: #2f7d32;
+  --food: #c0392b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.app {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+h1 {
+  margin: 0 0 12px;
+}
+
+.hud {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  color: var(--muted);
+}
+
+.board-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+#board {
+  width: min(90vw, 400px);
+  height: min(90vw, 400px);
+  background: var(--panel);
+  border: 1px solid var(--line);
+}
+
+.controls {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+button {
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--text);
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.touch-controls {
+  margin-top: 10px;
+}
+
+.touch-controls > button {
+  display: block;
+  margin: 0 auto 6px;
+}
+
+.touch-controls > div {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.hint {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 14px;
+}
