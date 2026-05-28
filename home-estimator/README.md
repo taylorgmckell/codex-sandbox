@@ -25,6 +25,21 @@ A responsive React + TypeScript + Tailwind app for rapidly analyzing homes, esti
 
 `npm run build`
 
+## GitHub Pages
+
+This repo is configured to deploy the app to GitHub Pages from GitHub Actions.
+
+Expected site URL:
+
+`https://taylorgmckell.github.io/codex-sandbox/`
+
+To publish:
+
+1. Push the repo to the `main` branch on GitHub
+2. In the GitHub repo, open `Settings > Pages`
+3. Set the source to `GitHub Actions` if it is not already selected
+4. Wait for the `Deploy Home Estimator` workflow to finish
+
 ## Notes
 
 - Zip code is used to infer state-level property tax and insurance averages.
