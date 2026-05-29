@@ -254,6 +254,12 @@ export function calculateEstimate(
     home.hoaMonthly +
     monthlyUtilities +
     monthlyMaintenance;
+  const monthlyHousingPayment =
+    monthlyPrincipalInterest +
+    monthlyTaxes +
+    monthlyInsurance +
+    monthlyPmi +
+    home.hoaMonthly;
 
   const grossRoommateIncome = roommates.reduce(
     (sum, roommate) => sum + (roommate.isActive ? roommate.rent : 0),
@@ -324,6 +330,7 @@ export function calculateEstimate(
     monthlyInsurance,
     monthlyPmi,
     monthlyHoa: home.hoaMonthly,
+    monthlyHousingPayment,
     monthlyUtilities,
     utilityBreakdown,
     monthlyMaintenance,

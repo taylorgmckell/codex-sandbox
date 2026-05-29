@@ -87,6 +87,7 @@ export interface EstimateResult {
   monthlyInsurance: number;
   monthlyPmi: number;
   monthlyHoa: number;
+  monthlyHousingPayment: number;
   monthlyUtilities: number;
   utilityBreakdown: {
     electric: number;

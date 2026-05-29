@@ -1,6 +1,6 @@
 // Main application screen that coordinates estimator inputs, outputs, and layout.
 import { useMemo, useState } from "react";
-import { AmortizationChart } from "./components/AmortizationChart";
+import { AffordabilityDashboard } from "./components/AffordabilityDashboard";
 import { BreakdownChart } from "./components/BreakdownChart";
 import { CalculationHelpModal } from "./components/CalculationHelpModal";
 import { NumberInput } from "./components/NumberInput";
@@ -8,9 +8,12 @@ import { OptionGroup } from "./components/OptionGroup";
 import { RoommateList } from "./components/RoommateList";
 import { SectionCard } from "./components/SectionCard";
 import { SummaryCard } from "./components/SummaryCard";
+import type { AffordabilityInputs } from "./lib/affordability";
 import { calculateEstimate } from "./lib/estimates";
 import { formatCurrency, formatPercent } from "./lib/format";
 import type { CostInputs, HomeInputs, LoanInputs, PropertyType, Roommate } from "./types";
+
+type AppPage = "estimator" | "affordability";
 
 const PROPERTY_OPTIONS: { value: PropertyType; label: string }[] = [
   { value: "single-family", label: "Single-family" },
@@ -56,6 +59,13 @@ const initialCosts: CostInputs = {
   internetMonthly: 70,
   maintenanceMode: "auto",
   maintenanceMonthly: 390,
+};
+
+const initialAffordabilityInputs: AffordabilityInputs = {
+  grossAnnualSalary: 125000,
+  monthlyTakeHome: 7200,
+  monthlyDebtPayments: 450,
+  availableCash: 50000,
 };
 
 function createRoommate(index: number): Roommate {
@@ -112,6 +122,9 @@ export default function App() {
   const [roommates, setRoommates] = useState<Roommate[]>([createRoommate(1), createRoommate(2)]);
   const [vacancyRate, setVacancyRate] = useState(5);
   const [isHelpOpen, setIsHelpOpen] = useState(false);
+  const [activePage, setActivePage] = useState<AppPage>("estimator");
+  const [affordabilityInputs, setAffordabilityInputs] =
+    useState<AffordabilityInputs>(initialAffordabilityInputs);
 
   const estimate = useMemo(
     () => calculateEstimate(home, loan, costs, roommates, vacancyRate),
@@ -128,6 +141,13 @@ export default function App() {
 
   const setCostValue = <K extends keyof CostInputs>(key: K, value: CostInputs[K]) => {
     setCosts((current) => ({ ...current, [key]: value }));
+  };
+
+  const setAffordabilityInputValue = <K extends keyof AffordabilityInputs>(
+    key: K,
+    value: AffordabilityInputs[K],
+  ) => {
+    setAffordabilityInputs((current) => ({ ...current, [key]: value }));
   };
 
   const addRoommate = () => setRoommates((current) => [...current, createRoommate(current.length + 1)]);
@@ -192,6 +212,30 @@ export default function App() {
                 Drop in the listing basics, let the app estimate the missing monthly costs, and
                 pressure-test the deal with roommates, vacancy, and closing cash.
               </p>
+              <div className="mt-5 flex flex-wrap gap-3">
+                <button
+                  type="button"
+                  onClick={() => setActivePage("estimator")}
+                  className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
+                    activePage === "estimator"
+                      ? "bg-white text-ink"
+                      : "border border-white/20 bg-white/10 text-white hover:bg-white/20"
+                  }`}
+                >
+                  Home estimator
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActivePage("affordability")}
+                  className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
+                    activePage === "affordability"
+                      ? "bg-gold text-ink"
+                      : "border border-white/20 bg-white/10 text-white hover:bg-white/20"
+                  }`}
+                >
+                  Taylor&apos;s affordability dashboard
+                </button>
+              </div>
             </div>
             <div className="grid gap-3 rounded-[28px] bg-white/8 p-4 backdrop-blur">
               <div className="flex items-center justify-between text-sm text-white/72">
@@ -242,6 +286,7 @@ export default function App() {
           />
         </div>
 
+        {activePage === "estimator" ? (
         <main className="mt-8 grid gap-6 xl:grid-cols-[1.05fr,0.95fr]">
           <div className="space-y-6">
             <SectionCard title="Home inputs" eyebrow="Property">
@@ -576,22 +621,22 @@ export default function App() {
             <SectionCard title="Monthly cost breakdown chart" eyebrow="Visualize the carry">
               <BreakdownChart items={estimate.breakdown} />
             </SectionCard>
-
-            <SectionCard title="Amortization chart" eyebrow="How the loan evolves">
-              <AmortizationChart data={estimate.amortization} />
-            </SectionCard>
-
-            <SectionCard title="Estimator notes" eyebrow="Assumptions">
-              <div className="space-y-3">
-                {estimate.notes.map((note) => (
-                  <div key={note} className="rounded-2xl bg-fog px-4 py-3 text-sm text-slate">
-                    {note}
-                  </div>
-                ))}
-              </div>
-            </SectionCard>
           </div>
         </main>
+        ) : (
+        <main className="mt-8">
+          {/* Legacy amortization chart and estimator notes components are intentionally preserved in the codebase for possible future reuse. */}
+          <AffordabilityDashboard
+            home={home}
+            loan={loan}
+            costs={costs}
+            roommates={roommates}
+            vacancyRate={vacancyRate}
+            inputs={affordabilityInputs}
+            onInputsChange={setAffordabilityInputValue}
+          />
+        </main>
+        )}
       </div>
     </div>
   );
