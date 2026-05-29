@@ -2,6 +2,7 @@
 import { useMemo, useState } from "react";
 import { AmortizationChart } from "./components/AmortizationChart";
 import { BreakdownChart } from "./components/BreakdownChart";
+import { CalculationHelpModal } from "./components/CalculationHelpModal";
 import { NumberInput } from "./components/NumberInput";
 import { OptionGroup } from "./components/OptionGroup";
 import { RoommateList } from "./components/RoommateList";
@@ -110,6 +111,7 @@ export default function App() {
   const [costs, setCosts] = useState<CostInputs>(initialCosts);
   const [roommates, setRoommates] = useState<Roommate[]>([createRoommate(1), createRoommate(2)]);
   const [vacancyRate, setVacancyRate] = useState(5);
+  const [isHelpOpen, setIsHelpOpen] = useState(false);
 
   const estimate = useMemo(
     () => calculateEstimate(home, loan, costs, roommates, vacancyRate),
@@ -138,6 +140,44 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(245,185,66,0.2),_transparent_35%),linear-gradient(180deg,_#fff8ef_0%,_#edf1f6_38%,_#edf1f6_100%)]">
+      <CalculationHelpModal
+        isOpen={isHelpOpen}
+        onClose={() => setIsHelpOpen(false)}
+        context={{
+          stateName: estimate.context.stateName,
+          regionalLabel: estimate.context.regionalLabel,
+          homePrice: home.price,
+          downPaymentAmount: estimate.downPaymentAmount,
+          downPaymentPercent: estimate.downPaymentPercent,
+          loanAmount: estimate.loanAmount,
+          interestRate: loan.interestRate,
+          termYears: loan.termYears,
+          monthlyPrincipalInterest: estimate.monthlyPrincipalInterest,
+          monthlyTaxes: estimate.monthlyTaxes,
+          monthlyInsurance: estimate.monthlyInsurance,
+          monthlyPmi: estimate.monthlyPmi,
+          monthlyHoa: estimate.monthlyHoa,
+          monthlyUtilities: estimate.monthlyUtilities,
+          monthlyMaintenance: estimate.monthlyMaintenance,
+          totalOwnershipCost: estimate.totalOwnershipCost,
+          grossRoommateIncome: estimate.grossRoommateIncome,
+          effectiveRoommateIncome: estimate.effectiveRoommateIncome,
+          vacancyRate,
+          vacancyLoss: estimate.vacancyLoss,
+          netMonthlyCost: estimate.netMonthlyCost,
+          closingCosts: estimate.closingCosts,
+          prepaidReserves: estimate.prepaidReserves,
+          fundingFee: estimate.fundingFee,
+          estimatedCashToClose: estimate.estimatedCashToClose,
+          mortgageType: loan.mortgageType,
+          occupancyType: loan.occupancyType,
+          propertyTaxMode: costs.propertyTaxMode,
+          insuranceMode: costs.insuranceMode,
+          pmiMode: costs.pmiMode,
+          utilitiesMode: costs.utilitiesMode,
+          maintenanceMode: costs.maintenanceMode,
+        }}
+      />
       <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 lg:py-10">
         <header className="mb-8 overflow-hidden rounded-[32px] bg-ink px-6 py-8 text-white shadow-panel sm:px-8">
           <div className="grid gap-8 lg:grid-cols-[1.3fr,0.7fr] lg:items-end">
@@ -467,7 +507,19 @@ export default function App() {
           </div>
 
           <div className="space-y-6">
-            <SectionCard title="Analysis summary" eyebrow="Outputs">
+            <SectionCard
+              title="Analysis summary"
+              eyebrow="Outputs"
+              action={
+                <button
+                  type="button"
+                  onClick={() => setIsHelpOpen(true)}
+                  className="rounded-full border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-ink transition hover:border-ember hover:text-ember"
+                >
+                  How this works
+                </button>
+              }
+            >
               <div className="grid gap-2">
                 <StatRow label="Loan amount" value={formatCurrency(estimate.loanAmount)} />
                 <StatRow
