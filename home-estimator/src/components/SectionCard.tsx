@@ -1,3 +1,4 @@
+// Shared section wrapper that gives each major panel a consistent card layout.
 import type { PropsWithChildren, ReactNode } from "react";
 
 interface SectionCardProps extends PropsWithChildren {

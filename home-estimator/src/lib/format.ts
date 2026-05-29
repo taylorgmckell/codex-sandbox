@@ -1,3 +1,4 @@
+// Shared formatting and numeric helper functions used throughout the UI.
 export function formatCurrency(value: number): string {
   return new Intl.NumberFormat("en-US", {
     style: "currency",

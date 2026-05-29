@@ -1,3 +1,4 @@
+// SVG donut and bar chart for the monthly ownership cost breakdown.
 import { formatCurrency } from "../lib/format";
 import type { MonthlyBreakdownItem } from "../types";
 

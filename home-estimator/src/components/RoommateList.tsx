@@ -1,3 +1,4 @@
+// Dynamic roommate editor with vacancy stress testing and occupancy toggles.
 import type { Roommate } from "../types";
 import { NumberInput } from "./NumberInput";
 

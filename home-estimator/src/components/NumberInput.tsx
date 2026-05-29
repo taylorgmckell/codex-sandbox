@@ -1,3 +1,4 @@
+// Reusable numeric input with optional prefix, suffix, helper text, and disabled state.
 interface NumberInputProps {
   label: string;
   value: number | null;

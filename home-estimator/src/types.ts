@@ -1,3 +1,4 @@
+// Central type definitions shared across calculator state, estimates, and charts.
 export type PropertyType =
   | "single-family"
   | "duplex"
