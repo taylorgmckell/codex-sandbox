@@ -1,3 +1,4 @@
+// Main application screen that coordinates estimator inputs, outputs, and layout.
 import { useMemo, useState } from "react";
 import { AmortizationChart } from "./components/AmortizationChart";
 import { BreakdownChart } from "./components/BreakdownChart";

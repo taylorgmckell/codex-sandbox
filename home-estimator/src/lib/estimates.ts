@@ -1,3 +1,4 @@
+// Core estimate engine for mortgage math, auto-estimated costs, and amortization data.
 import { inferStateFromZip } from "../data/geo";
 import type {
   AmortizationPoint,

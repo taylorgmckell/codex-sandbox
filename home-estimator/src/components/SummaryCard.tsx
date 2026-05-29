@@ -1,3 +1,4 @@
+// Compact summary card used for the top-level headline metrics.
 interface SummaryCardProps {
   label: string;
   value: string;

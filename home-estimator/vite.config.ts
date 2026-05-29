@@ -1,3 +1,4 @@
+// Configures Vite for local development and GitHub Pages deployment.
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 

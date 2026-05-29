@@ -1,3 +1,4 @@
+// Reusable segmented option selector for small sets of mutually exclusive choices.
 interface Option<T extends string> {
   value: T;
   label: string;

@@ -1,3 +1,4 @@
+// Defines the Tailwind theme, scan paths, and shared design tokens for the app.
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./index.html", "./src/**/*.{ts,tsx}"],

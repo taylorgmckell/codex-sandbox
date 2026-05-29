@@ -1,3 +1,4 @@
+// Regional reference data used to infer state-level tax and insurance assumptions from ZIP codes.
 export interface StateMeta {
   code: string;
   name: string;

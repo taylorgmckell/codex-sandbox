@@ -1,3 +1,4 @@
+// SVG chart that visualizes loan balance decline and cumulative principal over time.
 import { formatCurrency } from "../lib/format";
 import type { AmortizationPoint } from "../types";
 
